@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-I. -g -Wsign-conversion
+CFLAGS=-I. -g -Wsign-conversion -Wreturn-type
 DEPS = common.h
 OBJ = common.o
 
