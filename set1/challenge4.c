@@ -13,18 +13,14 @@ float findMostLikelyPlaintext(unsigned char *input, unsigned char **output)
 	float bestRating = 0.0;
 	unsigned char *bestOutput = calloc(length, sizeof(char));
 
-	for (unsigned char c = 'A'; c <= 'z'; c++)
+	for (unsigned char c = 0; c < 255; c++)
 	{
-		if (c == '[')
-			c = 'a';
-
 		for (int i = 0; i < length; i++)
 			keyBytes[i] = c;
 
 		unsigned char *rawOutput = xor(inputBytes, keyBytes, length);
 		float currentRating = plaintextRating(rawOutput, length);
-		//printf("for character %c, rating is %f, bestRating is %f\n", c, currentRating, bestRating);
-		//printf("string: %s\n", rawOutput);
+		//printf("char: %hx, xor: %s\n", c, rawOutput);
 		if (currentRating > bestRating)
 		{
 			bestKey = c;
@@ -57,14 +53,18 @@ int main(int argc, const char* argv[])
 	unsigned char *bestOutput = calloc(30, sizeof(char));
 	while (getline(&line, &len, f) != -1)
 	{
-		printf("%s", line);
-		unsigned char *temp;
-		float currentRating = findMostLikelyPlaintext(line, &temp);
-		//printf("rating: %f; value: %s\n", currentRating, temp);
-		if (currentRating > bestRating)
+		//printf("%s", line);
+		if (strlen(line) == 61) // ensure that it's 60 characters. one of the lines was 58
 		{
-			bestRating = currentRating;
-			memcpy(bestOutput, temp, 30 * sizeof(char));
+			unsigned char *temp;
+			float currentRating = findMostLikelyPlaintext(line, &temp);
+			//printf("rating: %f; value: %s\n", currentRating, temp);
+			if (currentRating > bestRating)
+			{
+				bestRating = currentRating;
+				memcpy(bestOutput, temp, 30 * sizeof(char));
+				//printf("new best: %s, %s\n", temp, bestOutput);
+			}
 		}
 	}
 

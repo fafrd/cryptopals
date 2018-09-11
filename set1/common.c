@@ -134,7 +134,9 @@ float plaintextRating(unsigned char *input, size_t length)
 	for (int i = 0; i < length; i++)
 	{
 		// if characters are outside normal range, return 0 immediately
-		if (input[i] < 0x9 || (input[i] > 0xd && input[i] < ' '))
+		if (input[i] < ' ' && input[i] != 0x9 && input[i] != 0xa && input[i] != 0xd)
+			return 0.0f;
+		if (input[i] > '~')
 			return 0.0f;
 
 		switch (input[i])
