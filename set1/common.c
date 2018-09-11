@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 unsigned char hexchar2byte(unsigned char hex)
 {
@@ -123,3 +124,47 @@ unsigned char* xor(unsigned char *input, unsigned char *key, size_t length)
 	return rv;
 }
 
+float plaintextRating(unsigned char *input, size_t length)
+{
+	// using a few criteria to rate the likelihood that *input is plaintext...
+	// if char outside printable range, return 0
+	// vowels should represent ~25% of characters
+	// spaces should represent ~20% of characters
+
+	int vowelCount = 0;
+	int spaceCount = 0;
+
+	for (int i = 0; i < length; i++)
+	{
+		// if characters are outside normal range, return 0 immediately
+		if (input[i] < 0x9 || (input[i] > 0xd && input[i] < ' '))
+			return 0.0f;
+
+		switch (input[i])
+		{
+			case 'a':
+			case 'e':
+			case 'i':
+			case 'o':
+			case 'u':
+			case 'A':
+			case 'E':
+			case 'I':
+			case 'O':
+			case 'U':
+				vowelCount++;
+				break;
+			case ' ':
+				spaceCount++;
+				break;
+		}
+	}
+
+	// sum the rating of vowels and spaces
+	// (let's just say they're equally important)
+	float vowelRate = vowelCount / (float)length;
+	float spacesRate = spaceCount / (float)length;
+
+	float rating = vowelRate + spacesRate;
+	return rating;
+}

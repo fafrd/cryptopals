@@ -11,6 +11,9 @@ int main()
 
 	size_t length = strlen(input) / 2;
 	unsigned char *keyBytes = calloc(length, sizeof(char));
+	unsigned char bestKey;
+	float bestRating = 0.0;
+	unsigned char *bestOutput = calloc(length, sizeof(char));
 
 	for (unsigned char c = 'A'; c <= 'z'; c++)
 	{
@@ -21,9 +24,18 @@ int main()
 			keyBytes[i] = c;
 
 		unsigned char *rawOutput = xor(inputBytes, keyBytes, length);
-		unsigned char *hexOutput = byte2hexchar_array(rawOutput, length);
-
-		printf("character %c: value %s\n", c, rawOutput);
-		//printf("%s\n", hexOutput);
+		float currentRating = plaintextRating(rawOutput, length);
+		//printf("for character %c, rating is %f, bestRating is %f\n", c, currentRating, bestRating);
+		//printf("string: %s\n", rawOutput);
+		if (currentRating > bestRating)
+		{
+			bestKey = c;
+			bestRating = currentRating;
+			memcpy(bestOutput, rawOutput, length * sizeof(char));
+		}
 	}
+
+	printf("character %c: value %s\n", bestKey, bestOutput);
+	printf("rating: %f\n", bestRating);
 }
+
