@@ -14,7 +14,7 @@ unsigned char hexchar2byte(unsigned char hex)
 		rv = hex - 'a' + 0xa;
 	else
 	{
-		printf("encountered unexpected hex character: %c\n", hex);
+		printf("encountered unexpected hex character: %c (bytes: 0x%hx)\n", hex);
 		exit(1);
 	}
 
@@ -27,10 +27,7 @@ unsigned char* hexchar2byte_array(unsigned char *hex, size_t length)
 	unsigned char *rv = calloc(length/2, sizeof(char));
 
 	if (length % 2)
-	{
-		printf("expected hex array to be a multiple of 2\n");
-		exit(1);
-	}
+		length--;
 
 	int byteCounter = 0;
 	for (int i = 0; i < length; i += 2)
