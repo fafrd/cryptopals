@@ -167,3 +167,27 @@ float plaintextRating(unsigned char *input, size_t length)
 	float rating = vowelRate + spacesRate;
 	return rating;
 }
+
+unsigned char* encryptRepeatingXor(unsigned char *input, unsigned char *key)
+{
+	size_t inputLength = strlen(input);
+	size_t keyLength = strlen(key);
+	unsigned char *ciphertext = calloc(inputLength, sizeof(char));
+
+	int keyCounter = 0;
+	for (int i = 0; i < inputLength; i++)
+	{
+		ciphertext[i] = input[i] ^ key[keyCounter];
+		printf("encrypting input char %c with key char %c; result: %hx\n", input[i], key[keyCounter], ciphertext[i]);
+	
+		if (keyCounter == keyLength - 1)
+			keyCounter = 0;
+		else
+			keyCounter++;
+	}
+
+	return ciphertext;
+}
+
+
+

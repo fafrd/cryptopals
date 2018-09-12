@@ -6,7 +6,7 @@ OBJ = common.o
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-all: challenge1 challenge2 challenge3 challenge4
+all: challenge1 challenge2 challenge3 challenge4 challenge5
 
 # there's probably a more clever way to do this
 
@@ -22,5 +22,8 @@ challenge3: $(OBJ) challenge3.o
 challenge4: $(OBJ) challenge4.o
 	$(CC) -o $@ $^ $(CFLAGS)
 
+challenge5: $(OBJ) challenge5.o
+	$(CC) -o $@ $^ $(CFLAGS)
+
 clean:
-	rm -f *.o challenge1 challenge2 challenge3 challenge4
+	rm -f *.o challenge1 challenge2 challenge3 challenge4 challenge5
