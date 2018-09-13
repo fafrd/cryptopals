@@ -25,5 +25,8 @@ challenge4: $(OBJ) challenge4.o
 challenge5: $(OBJ) challenge5.o
 	$(CC) -o $@ $^ $(CFLAGS)
 
+challenge6: $(OBJ) challenge6.o
+	$(CC) -o $@ $^ $(CFLAGS)
+
 clean:
-	rm -f *.o challenge1 challenge2 challenge3 challenge4 challenge5
+	rm -f *.o challenge1 challenge2 challenge3 challenge4 challenge5 challenge6
