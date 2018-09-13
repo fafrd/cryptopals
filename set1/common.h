@@ -1,6 +1,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+void printHexString(unsigned char *, size_t);
 unsigned char hexchar2byte(unsigned char);
 unsigned char* hexchar2byte_array(unsigned char *, size_t);
 unsigned char byte2hexchar(unsigned char);

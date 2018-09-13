@@ -3,6 +3,15 @@
 #include <string.h>
 #include <math.h>
 
+void printHexString(unsigned char *hex, size_t length)
+{
+	for (int i = 0; i < length; i+=2)
+	{
+		printf("%c%c", hex[i], hex[i+1]);
+	}
+	printf("\n");
+}
+
 unsigned char hexchar2byte(unsigned char hex)
 {
 	unsigned char rv;
@@ -178,7 +187,7 @@ unsigned char* encryptRepeatingXor(unsigned char *input, unsigned char *key)
 	for (int i = 0; i < inputLength; i++)
 	{
 		ciphertext[i] = input[i] ^ key[keyCounter];
-		printf("encrypting input char %c with key char %c; result: %hx\n", input[i], key[keyCounter], ciphertext[i]);
+		//printf("encrypting input char %c with key char %c; result: %hx\n", input[i], key[keyCounter], ciphertext[i]);
 	
 		if (keyCounter == keyLength - 1)
 			keyCounter = 0;
