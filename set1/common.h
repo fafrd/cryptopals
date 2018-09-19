@@ -10,5 +10,6 @@ unsigned char byte2base64char(unsigned char);
 unsigned char* xor(unsigned char *, unsigned char *, size_t);
 float plaintextRating(unsigned char *, size_t);
 unsigned char* encryptRepeatingXor(unsigned char *, unsigned char *);
+int calculateHammingDist(unsigned char *, unsigned char *, size_t);
 
 #endif
